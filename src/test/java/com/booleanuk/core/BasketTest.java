@@ -3,12 +3,11 @@ package com.booleanuk.core;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class BasketTest {
 
+
     @Test
-    void addOrder() {
+    void addAndGetOrders() {
         Basket basket = new Basket();
         Assertions.assertEquals(0, basket.getOrders().size());
         Assertions.assertTrue(basket.addOrder("BGLP",1));
@@ -19,7 +18,6 @@ class BasketTest {
         Assertions.assertEquals(1, basket.getOrders().size());
         Assertions.assertTrue(basket.addOrder("BGLO", 2));
         Assertions.assertEquals(2, basket.getOrders().size());
-
     }
 
     @Test
@@ -48,29 +46,33 @@ class BasketTest {
     }
 
     @Test
-    void changeBasketSizeLimit() {
+    void setBasketSizeLimit() {
         Basket basket = new Basket();
         Assertions.assertEquals(0, basket.getOrders().size());
         Assertions.assertFalse(basket.addOrder("BGLP",6));
         Assertions.assertEquals(0, basket.getOrders().size());
-        Assertions.assertFalse(basket.changeBasketSizeLimit(-1));
+        Assertions.assertFalse(basket.setBasketSizeLimit(-1));
         Assertions.assertFalse(basket.addOrder("BGLP",6));
         Assertions.assertEquals(0, basket.getOrders().size());
-        Assertions.assertTrue(basket.changeBasketSizeLimit(10));
+        Assertions.assertTrue(basket.setBasketSizeLimit(10));
         Assertions.assertTrue(basket.addOrder("BGLP",6));
         Assertions.assertEquals(1, basket.getOrders().size());
     }
 
     @Test
-    void setFillingTest() {
+    void setFilling() {
         Basket basket = new Basket();
         basket.addOrder("BGLP",1);
-        Assertions.assertEquals("none", basket.getOrders().get("BGLP").getKey().getFilligType());
+        Assertions.assertNull( basket.getOrders().get("BGLP").getKey().getFilling());
         Assertions.assertFalse(basket.setFilling("re", "Bacon"));
         Assertions.assertFalse(basket.setFilling("BGLP", "er"));
-        Assertions.assertEquals("none", basket.getOrders().get("BGLP").getKey().getFilligType());
-        Assertions.assertTrue(basket.setFilling("BGLP", "Bacon"));
-        Assertions.assertEquals("Bacon", basket.getOrders().get("BGLP").getKey().getFilligType());
+        Assertions.assertNull( basket.getOrders().get("BGLP").getKey().getFilling());
+        Assertions.assertTrue(basket.setFilling("BGLP", "FILB"));
+        Assertions.assertEquals("Bacon Filling", basket.getOrders().get("BGLPFILB").getKey().getFilling().getFilling());
+        Assertions.assertTrue(basket.setFilling("BGLPFILB", "FILH"));
+        Assertions.assertEquals("Ham Filling", basket.getOrders().get("BGLPFILH").getKey().getFilling().getFilling());
+
+
     }
 
     @Test
@@ -79,10 +81,10 @@ class BasketTest {
         Assertions.assertEquals(0, basket.getTotalCost());
         basket.addOrder("BGLP", 1);
         Assertions.assertEquals(0.39f, basket.getTotalCost());
-        basket.setFilling("BGLP", "Bacon");
+        basket.setFilling("BGLP", "FILB");
         Assertions.assertEquals(0.51f, basket.getTotalCost());
         basket.addOrder("BGLO", 2);
         Assertions.assertEquals(1.49f, basket.getTotalCost());
-
     }
+
 }

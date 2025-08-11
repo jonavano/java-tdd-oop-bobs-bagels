@@ -5,26 +5,56 @@ import org.junit.jupiter.api.Test;
 
 public class BagelTest {
     @Test
-    void setBagelType() {
-        Bagel bagel = new Bagel("BGLP");
-        Bagel bagel1 = new Bagel("BGLO");
-        Assertions.assertNotEquals(bagel.getBagelType(), bagel1.getBagelType());
-        bagel1.setBagelType("BGLP");
-        Assertions.assertEquals(bagel.getBagelType(), bagel1.getBagelType());
-        bagel.setBagelType("wow");
-        Assertions.assertEquals(bagel.getBagelType(), bagel1.getBagelType());
+    void getBagel() {
+        Bagel bagel = new PlainBagel();
+        Assertions.assertEquals("Plain Bagel", bagel.getBagel());
+        Bagel onionBagel = new OnionBagel();
+        Assertions.assertEquals("Onion Bagel", onionBagel.getBagel());
+    }
+
+    @Test
+    void getSku() {
+        Bagel bagel = new PlainBagel();
+        Assertions.assertEquals("BGLP", bagel.getSku());
+        Bagel onionBagel = new OnionBagel();
+        Assertions.assertEquals("BGLO", onionBagel.getSku());
+    }
+
+    @Test
+    void getCost() {
+        Bagel bagel = new PlainBagel();
+        Assertions.assertEquals(0.39f, bagel.getCost());
+        Bagel onionBagel = new OnionBagel();
+        Assertions.assertEquals(0.49f, onionBagel.getCost());
+    }
+
+    @Test
+    void getFilling() {
+        Assertions.assertNull(new PlainBagel().getFilling());
+        Assertions.assertNull(new SesameBagel().getFilling());
+    }
+
+    @Test
+    void setFilling() {
+        Bagel bagel = new PlainBagel();
+        Assertions.assertFalse(bagel.setFilling("not a filling"));
+        Assertions.assertNull(bagel.getFilling());
+        Assertions.assertTrue(bagel.setFilling("FILX"));
+        Assertions.assertEquals("Cream Cheese Filling", bagel.getFilling().getFilling());
 
     }
 
     @Test
-    void setFilligType() {
-        Bagel bagel = new Bagel("BGLP");
-        Bagel bagel1 = new Bagel("BGLP");
-        Assertions.assertEquals(bagel.getFilligType(), bagel1.getFilligType());
-        bagel.setFilligType("Bacon");
-        Assertions.assertNotEquals(bagel.getFilligType(), bagel1.getFilligType());
-        bagel.setFilligType("wow");
-        Assertions.assertEquals(bagel.getFilligType(), bagel1.getFilligType());
-
+    void getBagelFromSKU() {
+        Assertions.assertEquals("Plain Bagel", Bagel.getBagelFromSKU("BGLP").getBagel());
+        Assertions.assertNull(Bagel.getBagelFromSKU("now a bagel"));
+        Assertions.assertEquals("Sesame Bagel", Bagel.getBagelFromSKU("BGLS").getBagel());
     }
+
+    @Test
+    void getBagelPrices() {
+        var bagels = Bagel.getBagelPrices();
+        Assertions.assertEquals(4, bagels.size());
+    }
+
 }

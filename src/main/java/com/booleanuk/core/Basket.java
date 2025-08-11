@@ -8,11 +8,8 @@ public class Basket {
     int orderLimit;
     Map<String, Map.Entry<Bagel, Integer>> orders;
 
-    StoreManager manager;
-
     public Basket() {
-        this. manager = new StoreManager();
-        changeBasketSizeLimit(5);
+        setBasketSizeLimit(5);
         orders = new HashMap<>();
     }
 
@@ -20,36 +17,42 @@ public class Basket {
         return orders;
     }
 
-    public boolean addOrder(String bagelCode, int amount) {
-        if (manager.getBagelPrices().containsKey(bagelCode) && amount > 0 && getOrderSize() + amount <= orderLimit) {
-            orders.put(bagelCode, Map.entry(new Bagel(bagelCode), amount));
+    public boolean addOrder(String sku, int amount) {
+        Bagel bagel = Bagel.getBagelFromSKU(sku);
+        if (bagel != null && amount > 0 && getOrderSize() + amount <= orderLimit) {
+            orders.merge(sku, Map.entry(bagel, amount),
+                    (a, b) -> Map.entry(bagel, a.getValue()+b.getValue()));
             return true;
         }
         return false;
     }
 
-    public boolean changeOrder(String bagelToChange, String newBagel, int amount) {
+    public boolean changeOrder(String prevSKU, String newBagelSKU, int amount) {
         int prevAmount = 0;
-        if (orders.containsKey(bagelToChange) && manager.getBagelPrices().containsKey(newBagel) && amount > 0) {
-            if (bagelToChange.equals(newBagel)) {
-                prevAmount = orders.get(bagelToChange).getValue();
+        Bagel newBagel = Bagel.getBagelFromSKU(newBagelSKU);
+        if (orders.containsKey(prevSKU) && newBagel != null && amount > 0) {
+
+            if (prevSKU.equals(newBagelSKU)) {
+                return addOrder(newBagelSKU, amount);
             } else {
-                orders.remove(bagelToChange);
+                if (addOrder(newBagelSKU, amount)){
+                    orders.remove(prevSKU);
+                    return true;
+                }
             }
-            return addOrder(newBagel, amount + prevAmount);
         }
         return false;
     }
 
-    public boolean removeOrder(String bagel) {
-        if (orders.containsKey(bagel)) {
-            orders.remove(bagel);
+    public boolean removeOrder(String bagelSKU) {
+        if (orders.containsKey(bagelSKU)) {
+            orders.remove(bagelSKU);
             return true;
         }
         return false;
     }
 
-    public boolean changeBasketSizeLimit(int newSizeLimit) {
+    public boolean setBasketSizeLimit(int newSizeLimit) {
         if (newSizeLimit > 0) {
             this.orderLimit = newSizeLimit;
             return true;
@@ -61,18 +64,19 @@ public class Basket {
         int count =0;
         for (var order : orders.entrySet()) {
             count+= order.getValue().getValue();
-
         }
         return count;
     }
 
-    public boolean setFilling(String bagel, String filling) {
-        if (orders.containsKey(bagel)) {
-            var orderSet = orders.get(bagel);
-            if (orderSet.getKey().setFilligType(filling)) {
+    public boolean setFilling(String bagelSKU, String fillingSKU) {
+        if (orders.containsKey(bagelSKU)) {
+            var set = orders.get(bagelSKU);
+            Bagel bagel = set.getKey();
+            if (bagel.setFilling(fillingSKU)) {
+                orders.remove(bagelSKU);
+                orders.put(bagel.getSku() + fillingSKU, set);
                 return true;
             }
-
         }
         return false;
     }
@@ -84,10 +88,7 @@ public class Basket {
             Bagel bagel = singleOrder.getKey();
             int amount = singleOrder.getValue();
 
-            cost += (manager.getBagelPrice(bagel.getBagelType())) * amount;
-            cost += manager.getFillingPrice(bagel.getFilligType()) * amount;
-
-
+            cost += bagel.getCost() * amount;
         }
         return cost;
     }
