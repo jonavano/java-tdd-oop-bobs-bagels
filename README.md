@@ -1,6 +1,6 @@
 # Bob's Bagels - Object-oriented Programming
 
-![](./assets/bagels.jpg)
+![](./assets/storeItems.jpg)
 
 ## Learning Objectives
 - Design a domain from user stories
@@ -26,21 +26,21 @@
 ```
 1.
 As a member of the public,
-So I can order a bagel before work,
-I'd like to add a specific type of bagel to my basket.
+So I can order a storeItem before work,
+I'd like to add a specific type of storeItem to my basket.
 ```
 
 ```
 2.
 As a member of the public,
 So I can change my order,
-I'd like to remove a bagel from my basket.
+I'd like to remove a storeItem from my basket.
 ```
 
 ```
 3.
 As a member of the public,
-So that I can not overfill my small bagel basket
+So that I can not overfill my small storeItem basket
 I'd like to know when my basket is full when I try adding an item beyond my basket capacity.
 ```
 
@@ -69,21 +69,21 @@ I'd like to know the total cost of items in my basket.
 7.
 As a customer,
 So I know what the damage will be,
-I'd like to know the cost of a bagel before I add it to my basket.
+I'd like to know the cost of a storeItem before I add it to my basket.
 ```
 
 ```
 8.
 As a customer,
 So I can shake things up a bit,
-I'd like to be able to choose fillings for my bagel.
+I'd like to be able to choose fillings for my storeItem.
 ```
 
 ```
 9.
 As a customer,
 So I don't over-spend,
-I'd like to know the cost of each filling before I add it to my bagel order.
+I'd like to know the cost of each filling before I add it to my storeItem order.
 ```
 
 ```

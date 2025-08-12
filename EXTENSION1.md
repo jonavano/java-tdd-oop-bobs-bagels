@@ -2,7 +2,7 @@
 
 In a normal supermarket, things are identified using Stock Keeping Units, or SKUs.
 
-In Bob's Bagels, we'll use the first 3 letters of a bagel with an extra letter for the variant. For example: an 'everything bagel' has a SKU of `BGLE`.
+In Bob's Bagels, we'll use the first 3 letters of a storeItem with an extra letter for the variant. For example: an 'everything storeItem' has a SKU of `BGLE`.
 
 Our goods are priced individually. In addition, some items are multi-priced: buy n of them, and they'll cost you y pounds.
 
@@ -15,7 +15,7 @@ Our goods are priced individually. In addition, some items are multi-priced: buy
 | BGLE | Bagel  | Everything | .49   | 6 for 2.49              |
 | COFB | Coffee | Black      | .99   | Coffee & Bagel for 1.25 |
 
-Every Bagel is available for the `6 for 2.49` and `12 for 3.99` offer, but fillings still cost the extra amount per bagel.
+Every Bagel is available for the `6 for 2.49` and `12 for 3.99` offer, but fillings still cost the extra amount per storeItem.
 
 #### Example orders
 ```

@@ -5,7 +5,7 @@ import com.booleanuk.extension.ReceiptItem;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Bagel implements ReceiptItem {
+public abstract class StoreItem implements ReceiptItem {
 
     private final String bagelName;
     private final String sku;
@@ -13,7 +13,7 @@ public abstract class Bagel implements ReceiptItem {
 
     private Filling filling;
 
-    protected Bagel(String bagelName, String sku, float cost) {
+    protected StoreItem(String bagelName, String sku, float cost) {
         this.sku = sku;
         this.bagelName = bagelName;
         this.cost = cost;
@@ -29,11 +29,6 @@ public abstract class Bagel implements ReceiptItem {
 
     public float getCost() {
         return this.cost;
-//        float fulCost = cost;
-//        if (filling != null) {
-//            fulCost += filling.getCost();
-//        }
-//        return fulCost;
     }
 
     public Filling getFilling() {
@@ -54,21 +49,26 @@ public abstract class Bagel implements ReceiptItem {
         this.filling = null;
     }
 
-    public static Bagel getBagelFromSKU(String sku) {
+    public static StoreItem getBagelFromSKU(String sku) {
         return switch (sku) {
             case "BGLP" -> new PlainBagel();
             case "BGLO" -> new OnionBagel();
             case "BGLE" -> new EverythingBagel();
             case "BGLS" -> new SesameBagel();
+            case "COFB" -> new CoffeeBlack();
+            case "COFW" -> new CoffeeWhite();
+            case "COFC" -> new CoffeeCapuccino();
+            case "COFL" -> new CoffeeLatte();
             default -> null;
         };
     }
 
-    public static Map<String, Float> getBagelPrices() {
-        Bagel[] bagels = {new PlainBagel(), new OnionBagel(), new SesameBagel(), new EverythingBagel()};
+    public static Map<String, Float> getStoreItemPrices() {
+        StoreItem[] storeItems = {new PlainBagel(), new OnionBagel(), new SesameBagel(), new EverythingBagel(),
+        new CoffeeBlack(), new CoffeeWhite(), new CoffeeCapuccino(), new CoffeeLatte()};
         Map<String, Float> priceList = new HashMap<>();
-        for (Bagel bagel: bagels) {
-            priceList.put(bagel.getName(), bagel.getCost());
+        for (StoreItem storeItem : storeItems) {
+            priceList.put(storeItem.getName(), storeItem.getCost());
         }
         return priceList;
     }

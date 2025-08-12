@@ -1,9 +1,9 @@
 package com.booleanuk.extension;
 
-import com.booleanuk.core.Bagel;
+import com.booleanuk.core.StoreItem;
 
-public class BundledPlainBagle extends Bagel {
+public class BundledPlainBagle extends StoreItem {
     public BundledPlainBagle() {
-        super("Bunlde 12 Plain Bagles", "BBGLP", 3.99f);
+        super("Bundle: 12 Plain Bagles", "BBGLP", 3.99f);
     }
 }

@@ -1,12 +1,9 @@
 package com.booleanuk.extension;
 
-import com.booleanuk.core.Basket;
 import com.booleanuk.core.PlainBagel;
-import com.booleanuk.core.StoreManeger;
+import com.booleanuk.core.StoreManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ExtentionBasketTest {
 
@@ -26,7 +23,7 @@ class ExtentionBasketTest {
     @Test
     void countCostBundle() {
         ExtentionBasket basket = new ExtentionBasket();
-        StoreManeger.setBasketSize(99, true);
+        StoreManager.setBasketSize(99, true);
         basket.addOrder("BGLP", 13);
         Assertions.assertEquals(4.38, basket.countCostBundle(new PlainBagel(), new BundledPlainBagle(), 13, 12), 0.001);
     }
@@ -43,5 +40,21 @@ class ExtentionBasketTest {
         Assertions.assertEquals(4, basket.getReceipt().size());
 
     }
+//     This was for me personally to test the to string :)
+//    @Test
+//    void getReceiptToString() {
+//        ExtentionBasket basket = new ExtentionBasket();
+//        basket.addOrder("BGLO", 3);
+//        basket.setFilling("BGLO", "FILH");
+//        basket.addOrder("BGLP", 3);
+//        basket.setFilling("BGLP", "FILH");
+//        basket.addOrder("BGLP", 11);
+//        basket.addOrder("COFB", 1);
+//        Assertions.assertEquals("", basket.getReceiptToString());
+//
+//
+//    }
+
+
 
 }
