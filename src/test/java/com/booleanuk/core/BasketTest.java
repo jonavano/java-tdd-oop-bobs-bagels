@@ -46,20 +46,6 @@ class BasketTest {
     }
 
     @Test
-    void setBasketSizeLimit() {
-        Basket basket = new Basket();
-        Assertions.assertEquals(0, basket.getOrders().size());
-        Assertions.assertFalse(basket.addOrder("BGLP",6));
-        Assertions.assertEquals(0, basket.getOrders().size());
-        Assertions.assertFalse(basket.setBasketSizeLimit(-1));
-        Assertions.assertFalse(basket.addOrder("BGLP",6));
-        Assertions.assertEquals(0, basket.getOrders().size());
-        Assertions.assertTrue(basket.setBasketSizeLimit(10));
-        Assertions.assertTrue(basket.addOrder("BGLP",6));
-        Assertions.assertEquals(1, basket.getOrders().size());
-    }
-
-    @Test
     void setFilling() {
         Basket basket = new Basket();
         basket.addOrder("BGLP",1);
@@ -68,9 +54,9 @@ class BasketTest {
         Assertions.assertFalse(basket.setFilling("BGLP", "er"));
         Assertions.assertNull( basket.getOrders().get("BGLP").getKey().getFilling());
         Assertions.assertTrue(basket.setFilling("BGLP", "FILB"));
-        Assertions.assertEquals("Bacon Filling", basket.getOrders().get("BGLPFILB").getKey().getFilling().getFilling());
+        Assertions.assertEquals("Bacon Filling", basket.getOrders().get("BGLPFILB").getKey().getFilling().getName());
         Assertions.assertTrue(basket.setFilling("BGLPFILB", "FILH"));
-        Assertions.assertEquals("Ham Filling", basket.getOrders().get("BGLPFILH").getKey().getFilling().getFilling());
+        Assertions.assertEquals("Ham Filling", basket.getOrders().get("BGLPFILH").getKey().getFilling().getName());
 
 
     }
@@ -82,9 +68,9 @@ class BasketTest {
         basket.addOrder("BGLP", 1);
         Assertions.assertEquals(0.39f, basket.getTotalCost());
         basket.setFilling("BGLP", "FILB");
-        Assertions.assertEquals(0.51f, basket.getTotalCost());
+        Assertions.assertEquals(0.39f, basket.getTotalCost());
         basket.addOrder("BGLO", 2);
-        Assertions.assertEquals(1.49f, basket.getTotalCost());
+        Assertions.assertEquals(1.37f, basket.getTotalCost());
     }
 
 }

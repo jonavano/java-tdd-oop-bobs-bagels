@@ -5,19 +5,19 @@ import org.junit.jupiter.api.Test;
 
 public class BagelTest {
     @Test
-    void getBagel() {
+    void getName() {
         Bagel bagel = new PlainBagel();
-        Assertions.assertEquals("Plain Bagel", bagel.getBagel());
+        Assertions.assertEquals("Plain Bagel", bagel.getName());
         Bagel onionBagel = new OnionBagel();
-        Assertions.assertEquals("Onion Bagel", onionBagel.getBagel());
+        Assertions.assertEquals("Onion Bagel", onionBagel.getName());
     }
 
     @Test
-    void getSku() {
+    void getSKU() {
         Bagel bagel = new PlainBagel();
-        Assertions.assertEquals("BGLP", bagel.getSku());
+        Assertions.assertEquals("BGLP", bagel.getSKU());
         Bagel onionBagel = new OnionBagel();
-        Assertions.assertEquals("BGLO", onionBagel.getSku());
+        Assertions.assertEquals("BGLO", onionBagel.getSKU());
     }
 
     @Test
@@ -40,15 +40,15 @@ public class BagelTest {
         Assertions.assertFalse(bagel.setFilling("not a filling"));
         Assertions.assertNull(bagel.getFilling());
         Assertions.assertTrue(bagel.setFilling("FILX"));
-        Assertions.assertEquals("Cream Cheese Filling", bagel.getFilling().getFilling());
+        Assertions.assertEquals("Cream Cheese Filling", bagel.getFilling().getName());
 
     }
 
     @Test
     void getBagelFromSKU() {
-        Assertions.assertEquals("Plain Bagel", Bagel.getBagelFromSKU("BGLP").getBagel());
+        Assertions.assertEquals("Plain Bagel", Bagel.getBagelFromSKU("BGLP").getName());
         Assertions.assertNull(Bagel.getBagelFromSKU("now a bagel"));
-        Assertions.assertEquals("Sesame Bagel", Bagel.getBagelFromSKU("BGLS").getBagel());
+        Assertions.assertEquals("Sesame Bagel", Bagel.getBagelFromSKU("BGLS").getName());
     }
 
     @Test

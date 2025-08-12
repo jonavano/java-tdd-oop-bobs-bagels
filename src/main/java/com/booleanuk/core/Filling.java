@@ -1,9 +1,11 @@
 package com.booleanuk.core;
 
+import com.booleanuk.extension.ReceiptItem;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Filling {
+public abstract class Filling implements ReceiptItem {
 
     private final String filling;
     private final String sku;
@@ -13,10 +15,14 @@ public abstract class Filling {
         this.sku = sku;
     }
 
-    public String getFilling(){return filling;}
+    public String getName(){return filling;}
 
     public float getCost() {
         return 0.12f;}
+
+    public String getSKU() {
+        return sku;
+    }
 
 
     public static Filling getFillingFromSKU(String sku) {
@@ -36,7 +42,7 @@ public abstract class Filling {
                 new CheeseFilling(), new SmokedSalmonFilling(), new HamFilling()};
         Map<String, Float> priceList = new HashMap<>();
         for (Filling filling: fillings) {
-            priceList.put(filling.getFilling(), filling.getCost());
+            priceList.put(filling.getName(), filling.getCost());
         }
         return priceList;
     }

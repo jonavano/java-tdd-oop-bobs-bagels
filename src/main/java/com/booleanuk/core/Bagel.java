@@ -1,9 +1,11 @@
 package com.booleanuk.core;
 
+import com.booleanuk.extension.ReceiptItem;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Bagel {
+public abstract class Bagel implements ReceiptItem {
 
     private final String bagelName;
     private final String sku;
@@ -11,26 +13,27 @@ public abstract class Bagel {
 
     private Filling filling;
 
-    Bagel(String bagelName, String sku, float cost) {
+    protected Bagel(String bagelName, String sku, float cost) {
         this.sku = sku;
         this.bagelName = bagelName;
         this.cost = cost;
     }
 
-    public String getBagel() {
+    public String getName() {
         return bagelName;
     }
 
-    public String getSku() {
+    public String getSKU() {
         return sku;
     }
 
     public float getCost() {
-        float fulCost = cost;
-        if (filling != null) {
-            fulCost += filling.getCost();
-        }
-        return fulCost;
+        return this.cost;
+//        float fulCost = cost;
+//        if (filling != null) {
+//            fulCost += filling.getCost();
+//        }
+//        return fulCost;
     }
 
     public Filling getFilling() {
@@ -47,6 +50,10 @@ public abstract class Bagel {
         return false;
     }
 
+    public void removeFilling() {
+        this.filling = null;
+    }
+
     public static Bagel getBagelFromSKU(String sku) {
         return switch (sku) {
             case "BGLP" -> new PlainBagel();
@@ -61,7 +68,7 @@ public abstract class Bagel {
         Bagel[] bagels = {new PlainBagel(), new OnionBagel(), new SesameBagel(), new EverythingBagel()};
         Map<String, Float> priceList = new HashMap<>();
         for (Bagel bagel: bagels) {
-            priceList.put(bagel.getBagel(), bagel.getCost());
+            priceList.put(bagel.getName(), bagel.getCost());
         }
         return priceList;
     }

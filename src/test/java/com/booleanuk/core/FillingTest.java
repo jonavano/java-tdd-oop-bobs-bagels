@@ -3,16 +3,14 @@ package com.booleanuk.core;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class FillingTest {
 
     @Test
-    void getFilling() {
+    void getName() {
         Filling fillingHam = new HamFilling();
-        Assertions.assertEquals("Ham Filling", fillingHam.getFilling());
+        Assertions.assertEquals("Ham Filling", fillingHam.getName());
         Filling fillingCheese = new CheeseFilling();
-        Assertions.assertEquals("Cheese Filling", fillingCheese.getFilling());
+        Assertions.assertEquals("Cheese Filling", fillingCheese.getName());
     }
 
     @Test
@@ -27,8 +25,8 @@ class FillingTest {
 
     @Test
     void getFillingFromSKU() {
-        Assertions.assertEquals("Cheese Filling", Filling.getFillingFromSKU("FILC").getFilling());
-        Assertions.assertEquals("Cream Cheese Filling", Filling.getFillingFromSKU("FILX").getFilling());
+        Assertions.assertEquals("Cheese Filling", Filling.getFillingFromSKU("FILC").getName());
+        Assertions.assertEquals("Cream Cheese Filling", Filling.getFillingFromSKU("FILX").getName());
         Assertions.assertNull(Filling.getFillingFromSKU("not a filling"));
 
 

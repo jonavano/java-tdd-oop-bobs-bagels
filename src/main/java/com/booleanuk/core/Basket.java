@@ -5,11 +5,9 @@ import java.util.Map;
 
 public class Basket {
 
-    int orderLimit;
     Map<String, Map.Entry<Bagel, Integer>> orders;
 
     public Basket() {
-        setBasketSizeLimit(5);
         orders = new HashMap<>();
     }
 
@@ -18,6 +16,8 @@ public class Basket {
     }
 
     public boolean addOrder(String sku, int amount) {
+        int orderLimit = StoreManeger.getBasketSize();
+
         Bagel bagel = Bagel.getBagelFromSKU(sku);
         if (bagel != null && amount > 0 && getOrderSize() + amount <= orderLimit) {
             orders.merge(sku, Map.entry(bagel, amount),
@@ -52,13 +52,13 @@ public class Basket {
         return false;
     }
 
-    public boolean setBasketSizeLimit(int newSizeLimit) {
-        if (newSizeLimit > 0) {
-            this.orderLimit = newSizeLimit;
-            return true;
-        }
-        return false;
-    }
+//    public boolean setBasketSizeLimit(int newSizeLimit) {
+//        if (newSizeLimit > 0) {
+//            this.orderLimit = newSizeLimit;
+//            return true;
+//        }
+//        return false;
+//    }
 
     private int getOrderSize() {
         int count =0;
@@ -74,7 +74,7 @@ public class Basket {
             Bagel bagel = set.getKey();
             if (bagel.setFilling(fillingSKU)) {
                 orders.remove(bagelSKU);
-                orders.put(bagel.getSku() + fillingSKU, set);
+                orders.put(bagel.getSKU() + fillingSKU, set);
                 return true;
             }
         }
